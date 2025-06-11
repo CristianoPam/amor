@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Para Amanda 💖</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .neon-text {
+      font-size: 3em;
+      color: #fff;
+      text-shadow:
+        0 0 5px #ff1493,
+        0 0 10px #ff1493,
+        0 0 20px #ff1493,
+        0 0 40px #ff69b4,
+        0 0 80px #ff69b4;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        text-shadow:
+          0 0 5px #ff1493,
+          0 0 10px #ff1493,
+          0 0 20px #ff1493,
+          0 0 40px #ff69b4,
+          0 0 80px #ff69b4;
+      }
+      50% {
+        text-shadow:
+          0 0 10px #ff69b4,
+          0 0 20px #ff69b4,
+          0 0 40px #ff1493,
+          0 0 60px #ff1493,
+          0 0 100px #ff1493;
+      }
+    }
+
+    .typing {
+      font-size: 1.5em;
+      margin-top: 30px;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 6s steps(60, end) forwards;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    .hearts {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: pink;
+      animation: floatUp 8s linear infinite;
+      font-size: 20px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .carousel {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      max-width: 600px;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #ff69b4;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .carousel img.active {
+      opacity: 1;
+    }
+
+    #playButton {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ff69b4;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff1493;
+      z-index: 10;
+    }
+
+    #playButton:hover {
+      background: #ff1493;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botão para iniciar a música -->
+  <button id="playButton">🎵 Tocar música</button>
+  
+  <audio id="music" loop>
+    <source src="Always-On-My-Mind.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <div class="container">
+    <div class="neon-text">Amanda, meu amor eterno 💖</div>
+    <div class="typing" id="typingText"></div>
+  </div>
+
+  <div class="carousel" id="carousel">
+    <img src="amanda1.jpg" class="active">
+    <img src="amanda2.jpg">
+    <img src="amanda3.jpg">
+  </div>
+
+  <div class="hearts" id="heartsContainer"></div>
+
+  <script>
+    // Texto digitado
+    const text = "Cada batida do meu coração é uma declaração do quanto eu te amo.";
+    const typingText = document.getElementById("typingText");
+    let index = 0;
+    function type() {
+      if (index < text.length) {
+        typingText.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, 60);
+      }
+    }
+    window.onload = type;
+
+    // Música
+    const music = document.getElementById("music");
+    const playButton = document.getElementById("playButton");
+    playButton.addEventListener("click", () => {
+      music.play();
+      playButton.style.display = "none";
+    });
+
+    // Corações
+    const heartsContainer = document.getElementById("heartsContainer");
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 20 + 10 + "px";
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+    setInterval(createHeart, 300);
+
+    // Carrossel
+    const images = document.querySelectorAll(".carousel img");
+    let current = 0;
+    setInterval(() => {
+      images[current].classList.remove("active");
+      current = (current + 1) % images.length;
+      images[current].classList.add("active");
+    }, 4000);
+  </script>
+</body>
+</html>
